@@ -1,0 +1,23 @@
+<a class="card noDecoration bottomMargin" [routerLink]="['./', game.name]"
+   (click)="saveScrollPosition(game.id)" id="card-{{game.id}}">
+  <img class="card-img-top img-fluid" width="100%" [src]="game.boxart">
+  <div class="card-block noDecoration blackText">
+    <h5 class="card-title truncated-text">{{game.name}}</h5>
+    <div class="media" style="margin-top: 0">
+      <div class="d-flex align-self-center mr-2">
+        <i class="fa fa-users" aria-hidden="true"> </i>
+      </div>
+      <div class="media-body">
+        <p class="mb-0 cardText">{{game.viewers | number}}</p>
+      </div>
+    </div>
+    <div class="media" style="margin-top: 0">
+      <div class="d-flex align-self-center mr-2">
+        <i class="fa fa-video-camera" aria-hidden="true"> </i>
+      </div>
+      <div class="media-body">
+        <p class="mb-0 cardText">{{game.channels | number}}</p>
+      </div>
+    </div>
+  </div>
+</a>

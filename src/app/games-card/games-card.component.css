@@ -1,0 +1,29 @@
+.noDecoration {
+  text-decoration: none!important;
+}
+
+.truncated-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.bottomMargin {
+  margin-bottom: 20px;
+}
+
+.card-block {
+  padding: 0.8rem;
+}
+
+.card-title {
+  font-size: 0.8rem;
+}
+
+.cardText {
+  font-size: 0.9rem;
+}
+
+.blackText {
+  color: black;
+}

@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { PageScrollConfig } from "ng2-page-scroll";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppComponent {
-  title = 'app works!';
+  constructor() {
+    PageScrollConfig.defaultDuration = 0;
+  }
 }

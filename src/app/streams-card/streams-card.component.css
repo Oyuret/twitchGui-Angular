@@ -1,0 +1,18 @@
+.truncated-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.bottomMargin {
+  margin-bottom: 20px;
+}
+
+.click-enabled {
+  cursor: pointer;
+}
+
+.click-disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}

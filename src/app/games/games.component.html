@@ -1,3 +1,14 @@
-<p>
-  games works!
-</p>
+<div class="row">
+  <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6"
+       *ngFor="let game of games">
+    <app-games-card [game]="game">
+    </app-games-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-12">
+    <div class="card card-block bg-faded">
+      <button type="button" class="btn btn-primary btn-block" [disabled]="isLoading" (click)="getGames()">Load more</button>
+    </div>
+  </div>
+</div>
