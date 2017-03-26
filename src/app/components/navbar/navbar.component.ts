@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavbarCommunicationService } from "../navbar-communication/navbar-communication.service";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +17,18 @@ export class NavbarComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  public reloadEvent() {
+    this.navbarCommunicationService.announceReloadEvent();
+  }
+
+  private filterTermControl = new FormControl();
+
+  constructor(private navbarCommunicationService: NavbarCommunicationService) {
+    this.filterTermControl.valueChanges
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .subscribe(filterTerm => this.navbarCommunicationService.announceFilterEvent(filterTerm));
+  }
 
   ngOnInit() {
   }

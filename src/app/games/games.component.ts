@@ -10,6 +10,7 @@ import 'rxjs/add/operator/finally';
 import { Game } from './../twitch/games/game';
 import { GamesService } from './../twitch/games/games.service';
 import { GamesStateService } from './../games-state/games-state.service';
+import { NavbarCommunicationService } from "../components/navbar-communication/navbar-communication.service";
 
 @Component({
   selector: 'app-games',
@@ -19,9 +20,12 @@ import { GamesStateService } from './../games-state/games-state.service';
 })
 export class GamesComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
+  private filterEventSubscription: Subscription;
+  private reloadEventSubscription: Subscription;
 
   public games: Array<Game> = new Array<Game>();
   public isLoading: boolean = false;
+  public filterTerm: string = "";
 
   constructor(
     private gamesService: GamesService,
@@ -29,11 +33,18 @@ export class GamesComponent implements OnInit, OnDestroy {
     private uniquePipe: UniqPipe,
     private router: Router,
     private pageScrollService: PageScrollService,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private navbarCommunicationService: NavbarCommunicationService
   ) {
     this.routerSubscription = this.router.events
       .filter(event => event instanceof NavigationStart)
       .subscribe((event: NavigationStart) => this.saveGames());
+
+    this.filterEventSubscription = this.navbarCommunicationService.filterEvent$
+      .subscribe(newFilterTerm => this.filterTerm = newFilterTerm);
+
+    this.reloadEventSubscription = this.navbarCommunicationService.reloadEvent$
+      .subscribe(() => { this.games = []; this.getGames(); });
   }
 
   ngOnInit() {
@@ -82,6 +93,8 @@ export class GamesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.routerSubscription != null) { this.routerSubscription.unsubscribe(); }
+    if(this.filterEventSubscription != null) { this.filterEventSubscription.unsubscribe(); }
+    if(this.reloadEventSubscription != null) { this.reloadEventSubscription.unsubscribe(); }
   }
 
 }

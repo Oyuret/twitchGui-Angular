@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgPipesModule } from 'ng-pipes';
@@ -16,6 +16,7 @@ import { StreamsComponent } from './streams/streams.component';
 import { GamesStateService } from "./games-state/games-state.service";
 import { GamesCardComponent } from './games-card/games-card.component';
 import { StreamsCardComponent } from './streams-card/streams-card.component';
+import { NavbarCommunicationService } from "./components/navbar-communication/navbar-communication.service";
 
 @NgModule({
   declarations: [
@@ -29,13 +30,14 @@ import { StreamsCardComponent } from './streams-card/streams-card.component';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
     NgPipesModule,
     CollapseModule.forRoot(),
     Ng2PageScrollModule.forRoot()
   ],
-  providers: [GamesStateService],
+  providers: [GamesStateService, NavbarCommunicationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

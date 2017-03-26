@@ -12,8 +12,8 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Filter">
-      <button class="btn btn-outline-warning my-2 my-sm-0" type="button">Reload</button>
+      <input class="form-control mr-sm-2" type="text" placeholder="Filter" [formControl]="filterTermControl">
+      <button class="btn btn-outline-warning my-2 my-sm-0" type="button" (click)="reloadEvent()">Reload</button>
     </form>
   </div>
 </div>
