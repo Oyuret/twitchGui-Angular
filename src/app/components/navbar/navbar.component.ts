@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
     this.filterTermControl.valueChanges
       .debounceTime(400)
       .distinctUntilChanged()
-      .subscribe(filterTerm => this.navbarCommunicationService.announceFilterEvent(filterTerm));
+      .subscribe((filterTerm: string) => this.navbarCommunicationService.announceFilterEvent(filterTerm));
   }
 
   ngOnInit() {

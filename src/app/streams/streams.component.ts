@@ -29,7 +29,7 @@ export class StreamsComponent implements OnInit, OnDestroy {
     private navbarCommunicationService: NavbarCommunicationService
   ) {
     this.filterEventSubscription = this.navbarCommunicationService.filterEvent$
-      .subscribe(term => this.filterTerm = term);
+      .subscribe((term: string) => this.filterTerm = term);
 
     this.reloadEventSubscription = this.navbarCommunicationService.reloadEvent$
       .subscribe(() => { this.streams = []; this.getStreams(); });

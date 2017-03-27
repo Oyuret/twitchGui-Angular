@@ -41,7 +41,7 @@ export class GamesComponent implements OnInit, OnDestroy {
       .subscribe((event: NavigationStart) => this.saveGames());
 
     this.filterEventSubscription = this.navbarCommunicationService.filterEvent$
-      .subscribe(newFilterTerm => this.filterTerm = newFilterTerm);
+      .subscribe((newFilterTerm: string) => this.filterTerm = newFilterTerm);
 
     this.reloadEventSubscription = this.navbarCommunicationService.reloadEvent$
       .subscribe(() => { this.games = []; this.getGames(); });
