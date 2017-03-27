@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavbarCommunicationService } from "../navbar-communication/navbar-communication.service";
 import { FormControl } from "@angular/forms";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
+  private filterTermSubscription: Subscription;
   public isCollapsed: boolean = true;
 
   public menu: Array<any> = [
@@ -31,6 +33,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    if(this.filterTermSubscription !== null) { this.filterTermSubscription.unsubscribe(); }
   }
 
 }

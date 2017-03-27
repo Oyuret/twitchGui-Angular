@@ -7,9 +7,9 @@ import { Subscription } from "rxjs";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/finally';
 
-import { Game } from './../twitch/games/game';
-import { GamesService } from './../twitch/games/games.service';
-import { GamesStateService } from './../games-state/games-state.service';
+import { Game } from '../twitch/games/game';
+import { GamesService } from '../twitch/games/games.service';
+import { GamesStateService } from '../games-state/games-state.service';
 import { NavbarCommunicationService } from "../components/navbar-communication/navbar-communication.service";
 
 @Component({

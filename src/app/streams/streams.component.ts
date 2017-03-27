@@ -5,7 +5,7 @@ import { Subscription } from "rxjs";
 import 'rxjs/add/operator/finally';
 
 import { StreamsService } from "../twitch/streams/streams.service";
-import { Stream } from './../twitch/streams/stream';
+import { Stream } from '../twitch/streams/stream';
 import { NavbarCommunicationService } from "../components/navbar-communication/navbar-communication.service";
 
 @Component({
