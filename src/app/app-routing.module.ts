@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GamesComponent } from './games/games.component';
-import { StreamsComponent } from './streams/streams.component';
-
 const routes: Routes = [
   { path: '', redirectTo: '/games', pathMatch: 'full' },
-  { path: 'games', component: GamesComponent, children: [] },
-  { path: 'games/:game', component: StreamsComponent }
+  { path: 'games', loadChildren:'./browsing/browsing.module#BrowsingModule' },
+  { path: 'following', loadChildren:'./following/following.module#FollowingModule' },
+  { path: 'search', loadChildren:'./search/search.module#SearchModule' },
+  { path: 'settings', loadChildren:'./site-settings/site-settings.module#SiteSettingsModule' }
 ];
 
 @NgModule({

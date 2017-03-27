@@ -1,7 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { Game } from './../twitch/games/game';
-import { GamesStateService } from "../games-state/games-state.service";
+import { Game } from '../../twitch/games/game';
+import { CacheCommunicationService } from "../../core/cache-communication/cache-communication.service";
 
 @Component({
   selector: 'app-games-card',
@@ -12,11 +12,9 @@ import { GamesStateService } from "../games-state/games-state.service";
 export class GamesCardComponent {
   @Input() game: Game;
 
-  constructor(
-    private gamesStateService: GamesStateService
-  ){}
-
   public saveScrollPosition(id: number): void {
-    this.gamesStateService.saveScrollPosition(id.toString());
+    this.cacheCommunicationService.announceSaveScroll(id.toString());
   }
+
+  constructor(private cacheCommunicationService: CacheCommunicationService) {}
 }

@@ -1,16 +1,17 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { PageScrollService, PageScrollInstance } from "ng2-page-scroll";
 import { DOCUMENT } from "@angular/platform-browser";
-import { UniqPipe } from "ng-pipes";
 import { Subscription } from "rxjs";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/finally';
 
-import { Game } from '../twitch/games/game';
-import { GamesService } from '../twitch/games/games.service';
+import { PageScrollService, PageScrollInstance } from "ng2-page-scroll";
+import { UniqPipe } from "ng-pipes";
+
+import { Game } from '../../twitch/games/game';
+import { GamesService } from '../../twitch/games/games.service';
 import { GamesStateService } from '../games-state/games-state.service';
-import { NavbarCommunicationService } from "../components/navbar-communication/navbar-communication.service";
+import { NavbarCommunicationService } from "../../core/navbar-communication/navbar-communication.service";
 
 @Component({
   selector: 'app-games',

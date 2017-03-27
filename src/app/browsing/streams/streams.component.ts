@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { UniqPipe } from "ng-pipes";
 import { Subscription } from "rxjs";
 import 'rxjs/add/operator/finally';
 
-import { StreamsService } from "../twitch/streams/streams.service";
-import { Stream } from '../twitch/streams/stream';
-import { NavbarCommunicationService } from "../components/navbar-communication/navbar-communication.service";
+import { UniqPipe } from "ng-pipes";
+
+import { StreamsService } from "../../twitch/streams/streams.service";
+import { Stream } from '../../twitch/streams/stream';
+import { NavbarCommunicationService } from "../../core/navbar-communication/navbar-communication.service";
 
 @Component({
   selector: 'app-streams',

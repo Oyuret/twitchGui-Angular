@@ -13,10 +13,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public isCollapsed: boolean = true;
 
   public menu: Array<any> = [
-    {
-      'title': 'Games',
-      'link': '/'
-    }
+    { 'title': 'Games', 'link': '/games' },
+    { 'title': 'Following', 'link': '/following' },
+    { 'title': 'Search', 'link': '/search' },
+    { 'title': 'Settings', 'link': '/settings' }
   ];
 
   public reloadEvent() {
