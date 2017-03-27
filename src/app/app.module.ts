@@ -2,13 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
 import { NgPipesModule } from 'ng-pipes';
 import { CollapseModule } from 'ng2-bootstrap';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
-import { routes } from './app.routes';
-
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GamesComponent } from './games/games.component';
@@ -32,10 +30,10 @@ import { NavbarCommunicationService } from "./components/navbar-communication/na
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(routes),
     NgPipesModule,
     CollapseModule.forRoot(),
-    Ng2PageScrollModule.forRoot()
+    Ng2PageScrollModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [GamesStateService, NavbarCommunicationService],
   bootstrap: [AppComponent]
