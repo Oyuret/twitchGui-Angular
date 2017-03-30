@@ -7,10 +7,10 @@ import 'rxjs/add/operator/catch';
 import { Game } from '../classes/game';
 
 @Injectable()
-export class GamesService {
+export class SearchService {
 
-  public getGames(offset : number): Observable<Game[]> {
-    return this.http.get(`/api/twitch/games?offset=${offset}`)
+  public searchGames(searchTerm: string): Observable<Game[]> {
+    return this.http.get(`/api/twitch/searchGames?q=${searchTerm}`)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -20,13 +20,13 @@ export class GamesService {
 
     let games: Game[] = [];
 
-    for(let gameData of body.top) {
+    for(let gameData of body.games) {
       let game: Game = {
-        name: gameData.game.name,
-        channels: gameData.channels,
+        id: gameData._id,
+        name: gameData.name,
         viewers: gameData.viewers,
-        boxart: gameData.game.box.medium,
-        id: gameData.game._id
+        channels: gameData.channels,
+        boxart: gameData.box.medium
       };
 
       games.push(game);
@@ -50,4 +50,5 @@ export class GamesService {
   }
 
   constructor(private http: Http) { }
+
 }

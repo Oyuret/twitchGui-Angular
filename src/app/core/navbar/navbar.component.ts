@@ -27,8 +27,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(private navbarCommunicationService: NavbarCommunicationService) {
     this.filterTermControl.valueChanges
-      .debounceTime(400)
-      .distinctUntilChanged()
       .subscribe((filterTerm: string) => this.navbarCommunicationService.announceFilterEvent(filterTerm));
   }
 

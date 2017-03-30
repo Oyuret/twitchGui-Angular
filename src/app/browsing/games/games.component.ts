@@ -8,9 +8,10 @@ import 'rxjs/add/operator/finally';
 import { PageScrollService, PageScrollInstance } from "ng2-page-scroll";
 import { UniqPipe } from "ng-pipes";
 
-import { Game } from '../../twitch/games/game';
+import { Game } from '../../twitch/classes/game';
 import { GamesService } from '../../twitch/games/games.service';
 import { GamesStateService } from '../games-state/games-state.service';
+import { GamesCardCommService } from "../../core/games-card-comm/games-card-comm.service";
 import { NavbarCommunicationService } from "../../core/navbar-communication/navbar-communication.service";
 
 @Component({
@@ -21,6 +22,7 @@ import { NavbarCommunicationService } from "../../core/navbar-communication/navb
 })
 export class GamesComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
+  private gamesCardCommSubscription: Subscription;
   private filterEventSubscription: Subscription;
   private reloadEventSubscription: Subscription;
 
@@ -31,6 +33,7 @@ export class GamesComponent implements OnInit, OnDestroy {
   constructor(
     private gamesService: GamesService,
     private gamesStateService: GamesStateService,
+    private gamesCardComm: GamesCardCommService,
     private uniquePipe: UniqPipe,
     private router: Router,
     private pageScrollService: PageScrollService,
@@ -41,7 +44,12 @@ export class GamesComponent implements OnInit, OnDestroy {
       .filter(event => event instanceof NavigationStart)
       .subscribe((event: NavigationStart) => this.saveGames());
 
+    this.gamesCardCommSubscription = this.gamesCardComm.clickedEvent$
+      .subscribe((id: string) => this.gamesStateService.saveScrollPosition(id));
+
     this.filterEventSubscription = this.navbarCommunicationService.filterEvent$
+      .debounceTime(400)
+      .distinctUntilChanged()
       .subscribe((newFilterTerm: string) => this.filterTerm = newFilterTerm);
 
     this.reloadEventSubscription = this.navbarCommunicationService.reloadEvent$
@@ -53,7 +61,9 @@ export class GamesComponent implements OnInit, OnDestroy {
       this.restoreGames();
       this.restoreScrollPosition();
     } else {
+      this.isLoading = true;
       this.gamesService.getGames(this.games.length)
+        .finally(() => this.isLoading = false)
         .subscribe(
           games => { this.games = games; this.restoreScrollPosition(); },
           error => console.log(<any>error)
@@ -94,6 +104,7 @@ export class GamesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.routerSubscription != null) { this.routerSubscription.unsubscribe(); }
+    if(this.gamesCardCommSubscription != null) { this.gamesCardCommSubscription.unsubscribe(); }
     if(this.filterEventSubscription != null) { this.filterEventSubscription.unsubscribe(); }
     if(this.reloadEventSubscription != null) { this.reloadEventSubscription.unsubscribe(); }
   }

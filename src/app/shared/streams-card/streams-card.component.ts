@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Stream } from "../../twitch/streams/stream";
+import { Stream } from "../../twitch/classes/stream";
 
 @Component({
   selector: 'app-streams-card',

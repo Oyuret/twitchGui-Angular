@@ -7,8 +7,8 @@ import { CollapseModule } from "ng2-bootstrap";
 
 import { NavbarComponent } from "./navbar/navbar.component";
 import { NavbarCommunicationService } from "./navbar-communication/navbar-communication.service";
+import { GamesCardCommService } from "./games-card-comm/games-card-comm.service";
 import { throwIfAlreadyLoaded } from './module-import.guard';
-import {CacheCommunicationService} from "./cache-communication/cache-communication.service";
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -20,7 +20,7 @@ import {CacheCommunicationService} from "./cache-communication/cache-communicati
     ReactiveFormsModule
   ],
   exports: [NavbarComponent],
-  providers: [NavbarCommunicationService, CacheCommunicationService]
+  providers: [NavbarCommunicationService, GamesCardCommService]
 })
 export class CoreModule {
   constructor( @Optional() @SkipSelf() parentModule: CoreModule) {

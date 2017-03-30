@@ -1,15 +1,12 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { Game } from '../../twitch/games/game';
-import { CacheCommunicationService } from "../../core/cache-communication/cache-communication.service";
-import { Subscription } from "rxjs";
+import { Game } from '../../twitch/classes/game';
 
 @Injectable()
-export class GamesStateService implements OnDestroy{
+export class GamesStateService {
 
   private games: Game[];
   private scrollPosition: string;
-  private cacheCommunicationSubscription: Subscription;
 
   public hasSavedGames(): boolean {
     return this.games != null;
@@ -35,13 +32,6 @@ export class GamesStateService implements OnDestroy{
     return this.scrollPosition;
   }
 
-  constructor(private cacheCommunicationService: CacheCommunicationService) {
-    this.cacheCommunicationSubscription = this.cacheCommunicationService.saveScrollEvent$
-      .subscribe((id: string) => this.saveScrollPosition(id));
-  }
-
-  ngOnDestroy() {
-    if(this.cacheCommunicationSubscription !== null) { this.cacheCommunicationSubscription.unsubscribe(); }
-  }
+  constructor() {}
 
 }

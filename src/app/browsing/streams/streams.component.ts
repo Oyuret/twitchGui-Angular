@@ -6,7 +6,7 @@ import 'rxjs/add/operator/finally';
 import { UniqPipe } from "ng-pipes";
 
 import { StreamsService } from "../../twitch/streams/streams.service";
-import { Stream } from '../../twitch/streams/stream';
+import { Stream } from '../../twitch/classes/stream';
 import { NavbarCommunicationService } from "../../core/navbar-communication/navbar-communication.service";
 
 @Component({
@@ -30,6 +30,8 @@ export class StreamsComponent implements OnInit, OnDestroy {
     private navbarCommunicationService: NavbarCommunicationService
   ) {
     this.filterEventSubscription = this.navbarCommunicationService.filterEvent$
+      .debounceTime(400)
+      .distinctUntilChanged()
       .subscribe((term: string) => this.filterTerm = term);
 
     this.reloadEventSubscription = this.navbarCommunicationService.reloadEvent$

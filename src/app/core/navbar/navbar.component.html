@@ -11,9 +11,9 @@
         <a class="nav-link" [routerLink]="[item.link]">{{item.title}}</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Filter" [formControl]="filterTermControl">
-      <button class="btn btn-outline-warning my-2 my-sm-0" type="button" (click)="reloadEvent()">Reload</button>
+    <form class="form-inline my-2 my-lg-0" [routerLink]="['/search']" routerLinkActive #rla="routerLinkActive">
+      <input class="form-control mr-sm-2" type="text" placeholder="{{rla.isActive ? 'Search term' : 'Filter'}}" [formControl]="filterTermControl">
+      <button class="btn btn-outline-warning my-2 my-sm-0" type="button" (click)="reloadEvent()">{{rla.isActive ? 'Search' : 'Reload'}}</button>
     </form>
   </div>
 </div>
