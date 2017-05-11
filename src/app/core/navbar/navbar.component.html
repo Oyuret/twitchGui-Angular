@@ -7,13 +7,22 @@
   </div>
   <div [collapse]="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" *ngFor="let item of menu" [routerLinkActive]="['active']">
-        <a class="nav-link" [routerLink]="[item.link]">{{item.title}}</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/games']">Games</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/following']">Following</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" #searchRla="routerLinkActive">
+        <a class="nav-link" [routerLink]="['/search']">Search</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/settings']">Settings</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" [routerLink]="['/search']" routerLinkActive #rla="routerLinkActive">
-      <input class="form-control mr-sm-2" type="text" placeholder="{{rla.isActive ? 'Search term' : 'Filter'}}" [formControl]="filterTermControl">
-      <button class="btn btn-outline-warning my-2 my-sm-0" type="button" (click)="reloadEvent()">{{rla.isActive ? 'Search' : 'Reload'}}</button>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="{{searchRla.isActive ? 'Search term' : 'Filter'}}" [formControl]="filterTermControl">
+      <button class="btn btn-outline-warning my-2 my-sm-0" type="button" (click)="reloadEvent()">{{searchRla.isActive ? 'Search' : 'Reload'}}</button>
     </form>
   </div>
 </div>

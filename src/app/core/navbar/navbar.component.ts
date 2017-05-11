@@ -8,16 +8,9 @@ import { Subscription } from "rxjs";
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnDestroy {
   private filterTermSubscription: Subscription;
   public isCollapsed: boolean = true;
-
-  public menu: Array<any> = [
-    { 'title': 'Games', 'link': '/games' },
-    { 'title': 'Following', 'link': '/following' },
-    { 'title': 'Search', 'link': '/search' },
-    { 'title': 'Settings', 'link': '/settings' }
-  ];
 
   public reloadEvent() {
     this.navbarCommunicationService.announceReloadEvent();
@@ -28,9 +21,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(private navbarCommunicationService: NavbarCommunicationService) {
     this.filterTermControl.valueChanges
       .subscribe((filterTerm: string) => this.navbarCommunicationService.announceFilterEvent(filterTerm));
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy() {
