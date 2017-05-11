@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Stream } from "../../twitch/classes/stream";
 
 @Component({
@@ -7,12 +7,14 @@ import { Stream } from "../../twitch/classes/stream";
   styleUrls: ['./streams-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StreamsCardComponent implements OnInit {
+export class StreamsCardComponent {
   @Input() stream: Stream;
+  @Output() streamsCardClicked: EventEmitter<Stream> = new EventEmitter<Stream>();
+
+  public handleClick(): void {
+    this.streamsCardClicked.emit(this.stream);
+  }
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

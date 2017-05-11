@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6"
        *ngFor="let game of games | fuzzy:filterTerm">
-    <app-games-card [game]="game">
+    <app-games-card [game]="game" (gamesCardClicked)="handleGamesCardClicked($event)">
     </app-games-card>
   </div>
 </div>

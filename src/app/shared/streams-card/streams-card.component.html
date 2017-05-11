@@ -1,4 +1,4 @@
-<div class="card card-block bg-faded bottomMargin" [class.click-enabled]="stream.online == true">
+<div class="card card-block bg-faded bottomMargin" [class.click-enabled]="stream.online == true" (click)="handleClick()">
   <div class="row">
     <div class="col-md-4 col-sm-12 col-12">
       <img class="img-fluid" style="width: 100%" [src]="stream.preview">

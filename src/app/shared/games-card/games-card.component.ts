@@ -1,7 +1,6 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { Game } from '../../twitch/classes/game';
-import { GamesCardCommService } from "../../core/games-card-comm/games-card-comm.service";
 
 @Component({
   selector: 'app-games-card',
@@ -11,10 +10,11 @@ import { GamesCardCommService } from "../../core/games-card-comm/games-card-comm
 })
 export class GamesCardComponent {
   @Input() game: Game;
+  @Output() gamesCardClicked: EventEmitter<Game> = new EventEmitter<Game>();
 
-  public saveScrollPosition(id: number): void {
-    this.gamesCardComm.announceClicked(id.toString());
+  public handleClick(): void {
+    this.gamesCardClicked.emit(this.game);
   }
 
-  constructor(private gamesCardComm: GamesCardCommService) {}
+  constructor() {}
 }

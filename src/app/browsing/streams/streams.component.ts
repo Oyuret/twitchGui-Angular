@@ -44,9 +44,18 @@ export class StreamsComponent implements OnInit, OnDestroy {
     this.streamsService.getStreams(game, this.streams.length)
       .finally(() => this.isLoading = false)
       .subscribe(
-        streams => {this.streams = this.streams.concat(streams); this.streams = this.uniquePipe.transform(this.streams, 'name');},
+        streams => this.addStreamsToList(streams),
         error => console.log(<any>error)
       );
+  }
+
+  public handleStreamsCardClicked(): void {
+    //TODO: start the stream
+  }
+
+  private addStreamsToList(newStreams: Array<Stream>): void {
+    this.streams = this.streams.concat(newStreams); 
+    this.streams = this.uniquePipe.transform(this.streams, 'name');
   }
 
   ngOnInit() {

@@ -11,7 +11,6 @@ import { UniqPipe } from "ng-pipes";
 import { Game } from '../../twitch/classes/game';
 import { GamesService } from '../../twitch/games/games.service';
 import { GamesStateService } from '../games-state/games-state.service';
-import { GamesCardCommService } from "../../core/games-card-comm/games-card-comm.service";
 import { NavbarCommunicationService } from "../../core/navbar-communication/navbar-communication.service";
 
 @Component({
@@ -31,21 +30,17 @@ export class GamesComponent implements OnInit, OnDestroy {
   public filterTerm: string = "";
 
   constructor(
+    private navbarCommunicationService: NavbarCommunicationService,
     private gamesService: GamesService,
     private gamesStateService: GamesStateService,
-    private gamesCardComm: GamesCardCommService,
     private uniquePipe: UniqPipe,
     private router: Router,
     private pageScrollService: PageScrollService,
     @Inject(DOCUMENT) private document: Document,
-    private navbarCommunicationService: NavbarCommunicationService
   ) {
     this.routerSubscription = this.router.events
       .filter(event => event instanceof NavigationStart)
       .subscribe((event: NavigationStart) => this.saveGames());
-
-    this.gamesCardCommSubscription = this.gamesCardComm.clickedEvent$
-      .subscribe((id: string) => this.gamesStateService.saveScrollPosition(id));
 
     this.filterEventSubscription = this.navbarCommunicationService.filterEvent$
       .debounceTime(400)
@@ -56,34 +51,28 @@ export class GamesComponent implements OnInit, OnDestroy {
       .subscribe(() => { this.games = []; this.getGames(); });
   }
 
-  ngOnInit() {
-    if(this.gamesStateService.hasSavedGames()) {
-      this.restoreGames();
-      this.restoreScrollPosition();
-    } else {
-      this.isLoading = true;
-      this.gamesService.getGames(this.games.length)
-        .finally(() => this.isLoading = false)
-        .subscribe(
-          games => { this.games = games; this.restoreScrollPosition(); },
-          error => console.log(<any>error)
-        );
-    }
-  }
-
   public getGames(): void {
     this.isLoading = true;
 
     this.gamesService.getGames(this.games.length)
       .finally(() => this.isLoading = false)
       .subscribe(
-        games => { this.games = this.games.concat(games); this.games = this.uniquePipe.transform(this.games, 'id'); },
+        games => this.addNewStreamsToList(games),
         error => console.log(<any>error)
       );
   }
 
+  public handleGamesCardClicked(game: Game): void {
+    this.gamesStateService.saveScrollPosition(game.id.toString());
+  }
+
   private restoreGames(): void {
     this.games = this.gamesStateService.getSavedGames();
+  }
+
+  private addNewStreamsToList(newGames: Array<Game>): void {
+    this.games = this.games.concat(newGames); 
+    this.games = this.uniquePipe.transform(this.games, 'id');
   }
 
   private restoreScrollPosition(): void {
@@ -102,9 +91,23 @@ export class GamesComponent implements OnInit, OnDestroy {
     this.gamesStateService.saveGames(this.games);
   }
 
+  ngOnInit() {
+    if(this.gamesStateService.hasSavedGames()) {
+      this.restoreGames();
+      this.restoreScrollPosition();
+    } else {
+      this.isLoading = true;
+      this.gamesService.getGames(this.games.length)
+        .finally(() => this.isLoading = false)
+        .subscribe(
+          games => { this.games = games; this.restoreScrollPosition(); },
+          error => console.log(<any>error)
+        );
+    }
+  }
+
   ngOnDestroy() {
     if(this.routerSubscription != null) { this.routerSubscription.unsubscribe(); }
-    if(this.gamesCardCommSubscription != null) { this.gamesCardCommSubscription.unsubscribe(); }
     if(this.filterEventSubscription != null) { this.filterEventSubscription.unsubscribe(); }
     if(this.reloadEventSubscription != null) { this.reloadEventSubscription.unsubscribe(); }
   }
